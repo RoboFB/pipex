@@ -6,7 +6,7 @@
 #    By: rgohrig <rgohrig@student.42heilbronn.de>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/10 10:21:00 by rgohrig           #+#    #+#              #
-#    Updated: 2025/07/08 11:55:48 by rgohrig          ###   ########.fr        #
+#    Updated: 2025/07/10 17:14:36 by rgohrig          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@
 NAME :=			pipex
 CC :=			cc
 # CFLAGS :=		-Wall -Werror -Wextra # standard flags
-CFLAGS :=		-Wall -Werror -Wextra -g -fsanitize=address,undefined # debug flags temporary
+CFLAGS :=		-Wall -Werror -Wextra -g# valgrind flags
+# CFLAGS :=		-Wall -Werror -Wextra -g -fsanitize=address,undefined # debug flags temporary
 
 DIR_SRC :=		src
 SRC :=			$(notdir $(wildcard $(DIR_SRC)/*.c)) # temporary
@@ -77,3 +78,8 @@ fclean: clean
 re: fclean all
 
 .PHONY: all bonus clean fclean re
+
+# Debugging temorary
+# valgrind:
+# 	CFLAGS += -g -fsanitize=address,undefined
+# 	re

@@ -6,14 +6,14 @@
 /*   By: rgohrig <rgohrig@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:20:57 by rgohrig           #+#    #+#             */
-/*   Updated: 2025/07/09 15:22:43 by rgohrig          ###   ########.fr       */
+/*   Updated: 2025/07/09 18:35:34 by rgohrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 // F: free | free split strs and split
-static void	free_split(char **split)
+void	free_split(char **split)
 {
 	int	idx;
 
