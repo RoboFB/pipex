@@ -6,7 +6,7 @@
 /*   By: rgohrig <rgohrig@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 14:01:25 by rgohrig           #+#    #+#             */
-/*   Updated: 2025/07/10 17:31:51 by rgohrig          ###   ########.fr       */
+/*   Updated: 2025/07/11 17:00:25 by rgohrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	split_processes(int argc, char const *argv[], char const *envp[])
 				close(fd_test_2);
 				close(fds[0]);
 			}
-			ft_putendl_fd("_test_333", 2);
+			// ft_putendl_fd("_test_333", 2);
 			child((char *)argv[count + 2], (char **)envp); // execute command
 			ft_putendl_fd("E: 5", 2);
 			break ; // shout be never reached, but just in case
@@ -84,9 +84,9 @@ void	split_processes(int argc, char const *argv[], char const *envp[])
 	{
 		close(fds[0]); // close read end of pipe
 		close(fds[1]); // close write end of pipe
-		while(wait(NULL) >= 0 && errno != ECHILD)
-			ft_putendl_fd("1 c fished", 2);; // wait for child to finish
-		printf("Parent: All children finished\n");
+		while(wait(NULL) >= 0 && errno != ECHILD);
+			// ft_putendl_fd("1 c fished", 2);; // wait for child to finish
+		// printf("Parent: All children finished\n");
 	}
 	return ;
 }

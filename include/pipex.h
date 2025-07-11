@@ -35,10 +35,10 @@ void		error_exit_errno(int check);
 void		error_exit_msg(char *msg);
 void		error_exit_input(void);
 void		free_all(void);
+void		free_split(char **split);
 char		*get_path_comand(char *cmd_name, char **envp);
 int			main(int argc, char const *argv[], char const *envp[]);
 int			parser_check(int argc, char const *argv[]);
 void		split_processes(int argc, char const *argv[], char const *envp[]);
-void		free_split(char **split);
 
 #endif
