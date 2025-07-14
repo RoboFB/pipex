@@ -6,7 +6,7 @@
 /*   By: rgohrig <rgohrig@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:17:46 by rgohrig           #+#    #+#             */
-/*   Updated: 2025/07/09 21:53:07 by rgohrig          ###   ########.fr       */
+/*   Updated: 2025/07/14 17:18:02 by rgohrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,24 @@
 # include "printf.h"
 
 
+typedef	int t_fd;
 
 // auto
-void		child(char *comand_in, char **envp);
-void		error_exit_errno(int check);
+void		exe_command(char *comand_in, char **envp);
 void		error_exit_msg(char *msg);
+void		error_exit_errno(char *msg);
 void		error_exit_input(void);
 void		free_all(void);
 void		free_split(char **split);
 char		*get_path_comand(char *cmd_name, char **envp);
 int			main(int argc, char const *argv[], char const *envp[]);
 int			parser_check(int argc, char const *argv[]);
-void		split_processes(int argc, char const *argv[], char const *envp[]);
+pid_t		split_processes(int argc, char const *argv[], char const *envp[]);
+void		h_middle_child(t_fd *curr, t_fd *next);
+void		h_first_child(const char *input_file, t_fd *curr);
+void		h_last_child(const char *output_file, t_fd *curr);
+int			h_set_std_in_out(int in_fd, int out_fd);
+void		close_one_pip(t_fd *pipe);
+void		swap_ptrs(int **a, int **b);
 
 #endif

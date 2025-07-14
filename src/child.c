@@ -6,13 +6,13 @@
 /*   By: rgohrig <rgohrig@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 16:25:15 by rgohrig           #+#    #+#             */
-/*   Updated: 2025/07/10 14:52:41 by rgohrig          ###   ########.fr       */
+/*   Updated: 2025/07/14 19:09:17 by rgohrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	child(char *comand_in, char **envp)
+void	exe_command(char *comand_in, char **envp)
 {
 	char	*path_comand;
 	char	**comand_with_args;
@@ -26,12 +26,11 @@ void	child(char *comand_in, char **envp)
 		free_split(comand_with_args);
 		error_exit_msg("Command not found");
 	}
-	// printf("exe:%s|%s\n", path_comand, *comand_with_args);//debuging
+	fprintf(stderr, "exe:%s|%s\n", path_comand, *comand_with_args);//debuging
 	if (execve(path_comand, comand_with_args, envp) < 0)
 	{
 		free_split(comand_with_args);
-		perror(strerror(errno));
-		exit(EXIT_FAILURE);
+		error_exit_errno("20");
 	}
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: rgohrig <rgohrig@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 13:53:10 by rgohrig           #+#    #+#             */
-/*   Updated: 2025/07/09 18:59:41 by rgohrig          ###   ########.fr       */
+/*   Updated: 2025/07/14 18:29:54 by rgohrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,15 @@ int	main(int argc, char const *argv[], char const *envp[])
 	(void)argv; // temporary
 	// test();
 	// parsing
+	pid_t pid;
 
 	parser_check(argc, argv);
 
-	split_processes(argc, argv, envp);
+	pid = split_processes(argc, argv, envp);
 
 
+	if (pid != 0)
+		while(wait(NULL) >= 0 && errno != ECHILD);
 
 	// work
 

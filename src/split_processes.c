@@ -6,87 +6,129 @@
 /*   By: rgohrig <rgohrig@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 14:01:25 by rgohrig           #+#    #+#             */
-/*   Updated: 2025/07/11 17:00:25 by rgohrig          ###   ########.fr       */
+/*   Updated: 2025/07/14 23:17:38 by rgohrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	split_processes(int argc, char const *argv[], char const *envp[])
+pid_t	split_processes(int argc, char const *argv[], char const *envp[])
 {
-	int		pid;
-	int		count;
-	int		fds[2];
-
-	pipe(fds);
+	int			count;
+	t_fd		pipes[2][2];
+	pid_t		pid;
+	t_fd		*curr_pip;
+	t_fd		*new_pip;
 
 	count = 0;
-	while (count < argc - 3)
-	{
-		pid = fork();
-		if (pid == 0) //child
-		{
-			
-			if (count == 0)
-			{
-				close(fds[0]);
-				int fd_test = open(argv[1], O_RDONLY);
-				if (fd_test < 0)
-				{
-					ft_putendl_fd("Error opening input file", 2);
-					exit(EXIT_FAILURE);
-				}
-				if (dup2(fd_test, 0) < 0)
-				{
-					ft_putendl_fd("E: 1", 2);
-					exit(EXIT_FAILURE);
-				}
+	curr_pip = pipes[0];
+	new_pip = pipes[1];
+	if (pipe(curr_pip) < 0)
+		error_exit_errno("1");
+	pid = fork();
 
-				if (dup2(fds[1], 1) < 0)
-				{
-					ft_putendl_fd("E: 2", 2);
-					exit(EXIT_FAILURE);
-				}
-				
-				close(fd_test);
-				close(fds[1]);
-			}
-			if (count == 1)
-			{
-				close(fds[1]);
-				int fd_test_2 = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 777);
-				if (fd_test_2 < 0)
-				{
-					perror("Error opening output file");
-					exit(EXIT_FAILURE);
-				}
-				if (dup2(fds[0], 0) < 0)
-				{
-					ft_putendl_fd("E: 3", 2);
-					exit(EXIT_FAILURE);
-				}
-				if (dup2(fd_test_2, 1) < 0)
-				{
-					ft_putendl_fd("E: 4", 2);
-					exit(EXIT_FAILURE);
-				}
-				close(fd_test_2);
-				close(fds[0]);
-			}
-			// ft_putendl_fd("_test_333", 2);
-			child((char *)argv[count + 2], (char **)envp); // execute command
-			ft_putendl_fd("E: 5", 2);
-			break ; // shout be never reached, but just in case
+	if (pid == 0)
+	{
+		h_first_child(argv[1], curr_pip);
+		exe_command((char *)argv[2], (char **)envp); // execute command no return
+	}
+	else if (pid < 0)
+		error_exit_errno("15");
+	while (count < argc - 5)
+	{
+		if (pipe(new_pip) < 0)
+			error_exit_errno("2");
+		pid = fork();
+		if (pid == 0)
+		{
+			h_middle_child(curr_pip, new_pip);
+			exe_command((char *)argv[count + 3], (char **)envp);
 		}
+		else if (pid < 0)
+			error_exit_errno("3");
+		close_one_pip(curr_pip);
+		swap_ptrs(&new_pip, &curr_pip);
 		count++;
 	}
-	if (pid != 0)
+	pid = fork();
+	if (pid == 0)
 	{
-		close(fds[0]); // close read end of pipe
-		close(fds[1]); // close write end of pipe
-		while(wait(NULL) >= 0 && errno != ECHILD);
-			// ft_putendl_fd("1 c fished", 2);; // wait for child to finish
-		// printf("Parent: All children finished\n");
+		h_last_child(argv[argc - 1], curr_pip);
+		exe_command((char *)argv[argc - 2], (char **)envp);
 	}
+	else if (pid < 0)
+		error_exit_errno("16");
+	close_one_pip(curr_pip);
+	while(wait(NULL) >= 0 && errno != ECHILD);
+	return (pid);
+}
+
+
+
+
+void	h_middle_child(t_fd *curr, t_fd *next)
+{
+	if (close(curr[1]) < 0
+		|| close(next[0]) < 0)
+		error_exit_errno("4");
+	if (h_set_std_in_out(curr[0], next[1]) < 0)
+		error_exit_errno("5");
 	return ;
+}
+
+
+void	h_first_child(const char *input_file, t_fd *curr)
+{
+	int		read_fd;
+
+	if (close(curr[0]) < 0)
+		error_exit_errno("6");
+	read_fd = open(input_file, O_RDONLY);
+	if (read_fd < 0)
+		error_exit_errno("7");
+	if (h_set_std_in_out(read_fd, curr[1]) < 0)
+		error_exit_errno("8");
+	return ;
+}
+
+void	h_last_child(const char *output_file, t_fd *curr)
+{
+	int		write_fd;
+
+	if (close(curr[1]) < 0)
+		error_exit_errno("9");
+	write_fd = open(output_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (write_fd < 0)
+		error_exit_errno("10");
+	if (h_set_std_in_out(curr[0], write_fd) < 0)
+		error_exit_errno("11");
+	return ;
+}
+
+int	h_set_std_in_out(int in_fd, int out_fd)
+{
+	if (dup2(in_fd, STDIN_FILENO) < 0
+		|| close(in_fd) < 0
+		|| dup2(out_fd, STDOUT_FILENO) < 0
+		|| close(out_fd) < 0)
+		return (-1);
+	else
+		return (0);
+}
+
+void close_one_pip(t_fd *pipe)
+{
+	if (close(pipe[0]) < 0
+		|| close(pipe[1]) < 0)
+		error_exit_errno("13");
+	return ;
+}
+
+
+
+void swap_ptrs(int **a, int **b)
+{
+    int *temp = *a;
+    *a = *b;
+    *b = temp;
 }
