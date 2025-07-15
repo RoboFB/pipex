@@ -6,7 +6,7 @@
 /*   By: rgohrig <rgohrig@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 13:50:55 by rgohrig           #+#    #+#             */
-/*   Updated: 2025/07/14 18:48:48 by rgohrig          ###   ########.fr       */
+/*   Updated: 2025/07/15 18:40:38 by rgohrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	error_exit_errno(char *msg)
 		ft_putstr_fd(":", STDERR_FILENO);
 	}
 	ft_putendl_fd(strerror(errno), STDERR_FILENO);
-	exit(EXIT_FAILURE);
+	exit(errno);
 }
 
 void	error_exit_input(void)
@@ -47,3 +47,4 @@ void	error_exit_input(void)
 
 	error_exit_msg((char *)msg);
 }
+

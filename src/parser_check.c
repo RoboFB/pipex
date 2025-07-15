@@ -6,13 +6,11 @@
 /*   By: rgohrig <rgohrig@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:23:52 by rgohrig           #+#    #+#             */
-/*   Updated: 2025/07/09 18:22:59 by rgohrig          ###   ########.fr       */
+/*   Updated: 2025/07/15 18:25:05 by rgohrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-// check_path()
 
 static void	check_cmd(char const *input)
 {
@@ -24,11 +22,9 @@ static void	check_cmd(char const *input)
 static void	check_path(char const *input)
 {
 	if (input[0] == '\0')
-		error_exit_msg("1 Empty command in input");
+		error_exit_msg("1 Empty Path in input");
 	return ;
 }
-
-
 
 // R: 0 ok | -1 error | parses argc and argv
 int	parser_check(int argc, char const *argv[])

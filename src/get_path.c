@@ -6,14 +6,14 @@
 /*   By: rgohrig <rgohrig@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:32:37 by rgohrig           #+#    #+#             */
-/*   Updated: 2025/07/09 18:52:09 by rgohrig          ###   ########.fr       */
+/*   Updated: 2025/07/15 18:28:14 by rgohrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 // F: Mallocs
-static char	*h_test_path(char *cmd_name, char *path)
+static char	*h_test_path(char *cmd_name, const char *path)
 {
 	char	**path_all;
 	int		idx;
@@ -23,7 +23,7 @@ static char	*h_test_path(char *cmd_name, char *path)
 	idx = 0;
 	path_all = ft_split(path + 5, ':');
 	if (path_all == NULL || path_all[0] == NULL)
-		error_exit_msg("2 Memory full: ft_split failed");
+		return (NULL);
 	back_part = ft_strjoin("/", cmd_name);
 	if (back_part == NULL)
 		return (free_split(path_all), NULL);
@@ -42,7 +42,7 @@ static char	*h_test_path(char *cmd_name, char *path)
 }
 
 // Mallocs
-char	*get_path_comand(char *cmd_name, char **envp)
+char	*get_path_comand(char *cmd_name, const char *envp[])
 {
 	int		idx;
 
@@ -51,7 +51,6 @@ char	*get_path_comand(char *cmd_name, char **envp)
 	{
 		if (ft_strncmp(envp[idx], "PATH=", 5) == 0)
 		{
-			// printf("found:__%s__",envp[idx]);
 			return (h_test_path(cmd_name, envp[idx]));
 		}
 		idx++;
