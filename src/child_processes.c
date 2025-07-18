@@ -6,7 +6,7 @@
 /*   By: rgohrig <rgohrig@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 18:09:30 by rgohrig           #+#    #+#             */
-/*   Updated: 2025/07/15 18:13:40 by rgohrig          ###   ########.fr       */
+/*   Updated: 2025/07/18 18:44:04 by rgohrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ void	first_child(
 	else if (pid == -1)
 		error_exit_errno("fork first child process");
 	if (close(curr[0]) < 0)
-		error_exit_errno("6");
+		error_exit_errno("close");
 	read_fd = open(input_file, O_RDONLY);
 	if (read_fd < 0)
-		error_exit_errno("7");
+		error_exit_errno("input");
 	if (set_std_in_out(read_fd, curr[1]) < 0)
-		error_exit_errno("8");
+		error_exit_errno("dup2 or close");
 	exe_command(command_in, envp);
 	return ;
 }
@@ -48,14 +48,14 @@ void	middle_child(
 		error_exit_errno("fork middle child process");
 	if (close(curr[1]) < 0
 		|| close(next[0]) < 0)
-		error_exit_errno("4");
+		error_exit_errno("close");
 	if (set_std_in_out(curr[0], next[1]) < 0)
-		error_exit_errno("5");
+		error_exit_errno("dup2 or close");
 	exe_command(command_in, envp);
 	return ;
 }
 
-void	last_child(
+pid_t	last_child(
 	const char *output_file, t_fd *curr,
 	const char *command_in, const char *envp[])
 {
@@ -64,18 +64,18 @@ void	last_child(
 
 	pid = fork();
 	if (pid > 0)
-		return ;
+		return (pid);
 	else if (pid == -1)
 		error_exit_errno("fork last child process");
 	if (close(curr[1]) < 0)
-		error_exit_errno("9");
+		error_exit_errno("close");
 	write_fd = open(output_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (write_fd < 0)
-		error_exit_errno("10");
+		error_exit_errno("output");
 	if (set_std_in_out(curr[0], write_fd) < 0)
-		error_exit_errno("11");
+		error_exit_errno("dup2 or close");
 	exe_command(command_in, envp);
-	return ;
+	return (pid);
 }
 
 

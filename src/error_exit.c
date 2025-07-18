@@ -6,7 +6,7 @@
 /*   By: rgohrig <rgohrig@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 13:50:55 by rgohrig           #+#    #+#             */
-/*   Updated: 2025/07/15 18:40:38 by rgohrig          ###   ########.fr       */
+/*   Updated: 2025/07/18 18:48:56 by rgohrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 // Exit the program as failure.
 void	error_exit_msg(char *msg)
 {
-	ft_putstr_fd("Error: ", STDERR_FILENO);
 	ft_putendl_fd(msg, STDERR_FILENO);
 	exit(EXIT_FAILURE);
 }
@@ -23,11 +22,11 @@ void	error_exit_msg(char *msg)
 // prints errno
 void	error_exit_errno(char *msg)
 {
-	ft_putstr_fd("Error: ", STDERR_FILENO);
+	ft_putstr_fd("pipex: ", STDERR_FILENO);
 	if (msg[0])
 	{
 		ft_putstr_fd(msg, STDERR_FILENO);
-		ft_putstr_fd(":", STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
 	}
 	ft_putendl_fd(strerror(errno), STDERR_FILENO);
 	exit(errno);

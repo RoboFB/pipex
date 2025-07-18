@@ -6,7 +6,7 @@
 /*   By: rgohrig <rgohrig@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:23:52 by rgohrig           #+#    #+#             */
-/*   Updated: 2025/07/15 18:25:05 by rgohrig          ###   ########.fr       */
+/*   Updated: 2025/07/18 18:35:34 by rgohrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 static void	check_cmd(char const *input)
 {
 	if (input[0] == '\0')
-		error_exit_msg("0 Empty command in input");
+		error_exit_input();
 	return ;
 }
 
 static void	check_path(char const *input)
 {
 	if (input[0] == '\0')
-		error_exit_msg("1 Empty Path in input");
+		error_exit_input();
 	return ;
 }
 
@@ -38,8 +38,6 @@ int	parser_check(int argc, char const *argv[])
 	idx = 2;
 	while (idx < argc - 1)
 	{
-		// if (argv[idx][0] == '\0')
-		// 	error_exit_input();
 		check_cmd(argv[idx]);
 		idx++;
 	}
