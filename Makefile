@@ -6,7 +6,7 @@
 #    By: rgohrig <rgohrig@student.42heilbronn.de>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/10 10:21:00 by rgohrig           #+#    #+#              #
-#    Updated: 2025/07/08 11:55:48 by rgohrig          ###   ########.fr        #
+#    Updated: 2025/07/18 19:24:09 by rgohrig          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,22 @@ LIBS :=			$(LIBFT)/libft.a
 
 # default Rule
 all: lazy $(LIBFT)/libft.a $(NAME)
+
+
+PIPEX_BONUS := pipex_bonus
+
+# default Rule
+all : $(NAME)
+
+
+bonus: ./pipex_bonus
+	@$(MAKE) all
+	@cp $(NAME) $(PIPEX_BONUS)
+	@echo 📦 Copied $(NAME) to $(PIPEX_BONUS)
+
+
+
+
 
 # temporary 
 # Rule to update the header file

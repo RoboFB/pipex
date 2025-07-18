@@ -6,7 +6,7 @@
 /*   By: rgohrig <rgohrig@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 21:06:55 by rgohrig           #+#    #+#             */
-/*   Updated: 2025/07/18 21:11:46 by rgohrig          ###   ########.fr       */
+/*   Updated: 2025/07/18 21:14:22 by rgohrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,3 @@ char	**split_command(const char *start)
 	}
 	return (all_pp);
 }
-
-
-
