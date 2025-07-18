@@ -6,7 +6,7 @@
 /*   By: rgohrig <rgohrig@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 21:06:55 by rgohrig           #+#    #+#             */
-/*   Updated: 2025/07/18 21:14:22 by rgohrig          ###   ########.fr       */
+/*   Updated: 2025/07/18 22:29:18 by rgohrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static bool	h_check_space(const char *start, const char **end_out)
 	return (*end_out != start);
 }
 
-const char	*h_check_seperator(const char **start, const char **end_out)
+static const char	*h_check_seperator(const char **start, const char **end_out)
 {
 	static const char	*separator[5] = {"'", "\"", "\\'", "\\\"", NULL};
 	int					idx;
@@ -80,7 +80,6 @@ char	**split_command(const char *start)
 	all_pp = NULL;
 	while (*start)
 	{
-
 		end = NULL;
 		sep = h_check_seperator(&start, &end);
 		if ((sep == NULL && h_check_space(start, &end) != true)

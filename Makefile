@@ -6,7 +6,7 @@
 #    By: rgohrig <rgohrig@student.42heilbronn.de>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/10 10:21:00 by rgohrig           #+#    #+#              #
-#    Updated: 2025/07/18 19:24:09 by rgohrig          ###   ########.fr        #
+#    Updated: 2025/07/18 22:50:09 by rgohrig          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,24 +26,15 @@ LIBFT :=		./libft
 HEADERS :=		-I ./include -I $(LIBFT)/include
 LIBS :=			$(LIBFT)/libft.a
 
-# default Rule
-all: lazy $(LIBFT)/libft.a $(NAME)
+BONUS := $(NAME)_bonus
 
-
-PIPEX_BONUS := pipex_bonus
 
 # default Rule
-all : $(NAME)
+all: $(LIBFT)/libft.a $(NAME)
 
-
-bonus: ./pipex_bonus
-	@$(MAKE) all
-	@cp $(NAME) $(PIPEX_BONUS)
-	@echo 📦 Copied $(NAME) to $(PIPEX_BONUS)
-
-
-
-
+bonus: all
+	@cp $(NAME) $(BONUS)
+	@echo 📦 $(BONUS)
 
 # temporary 
 # Rule to update the header file
@@ -86,7 +77,7 @@ clean:
 	@$(MAKE) -C $(LIBFT) clean
 
 fclean: clean
-	@rm -f $(NAME)
+	@rm -f $(NAME) $(BONUS)
 	@echo 🧹🧹🧹 cleaned $(NAME)
 	@$(MAKE) -C $(LIBFT) fclean
 

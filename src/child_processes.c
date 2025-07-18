@@ -6,7 +6,7 @@
 /*   By: rgohrig <rgohrig@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 18:09:30 by rgohrig           #+#    #+#             */
-/*   Updated: 2025/07/18 18:44:04 by rgohrig          ###   ########.fr       */
+/*   Updated: 2025/07/18 22:14:12 by rgohrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,3 @@ pid_t	last_child(
 	exe_command(command_in, envp);
 	return (pid);
 }
-
-
