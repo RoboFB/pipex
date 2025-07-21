@@ -6,7 +6,7 @@
 #    By: rgohrig <rgohrig@student.42heilbronn.de>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/10 10:21:00 by rgohrig           #+#    #+#              #
-#    Updated: 2025/07/21 14:03:10 by rgohrig          ###   ########.fr        #
+#    Updated: 2025/07/21 14:35:47 by rgohrig          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@
 NAME :=			pipex
 CC :=			cc
 # CFLAGS :=		-Wall -Werror -Wextra # standard flags
-CFLAGS :=		-Wall -Werror -Wextra -g -fsanitize=address,undefined # debug flags temporary
+CFLAGS :=		-Wall -Werror -Wextra -g -fsanitize=address,undefined # debug
 
 LIBFT :=		./libft
 LIBS :=			$(LIBFT)/libft.a
@@ -38,7 +38,7 @@ SRC :=			child_processes.c \
 DIR_OBJ :=		obj
 OBJ :=			$(SRC:%.c=$(DIR_OBJ)/%.o)
 
-# ------------------------------------------------------------------------------
+# ----------------------------- NORMAL -----------------------------------------
 
 all: $(LIBFT)/libft.a $(NAME)
 
@@ -55,7 +55,7 @@ $(DIR_OBJ)/%.o : $(DIR_SRC)/%.c | $(DIR_OBJ)
 # executable
 $(NAME): $(OBJ)
 	@$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
-	@echo "\n🖇🖇🖇 $(NAME)\n"
+	@echo "\n🖇🖇🖇 $@\n"
 
 # ---------------------------- BONUS -------------------------------------------
 
@@ -65,15 +65,13 @@ BONUS_SRC :=		child_processes_bonus.c \
 					main_bonus.c \
 					split_processes_bonus.c
 
-BONUS_DIR_OBJ :=	obj/bonus
-BONUS_OBJ :=		$(BONUS_SRC:%.c=$(BONUS_DIR_OBJ)/%.o)
+BONUS_DIR_OBJ :=	$(DIR_OBJ)
+BONUS_OBJ :=		$(BONUS_SRC:%.c=$(BONUS_DIR_OBJ)/%.o) \
+					$(filter-out $(DIR_OBJ)/main.o, $(OBJ)) #add without main.o
 
-# ------------------------------------------------------------------------------
+# ---------------------------- BONUS -------------------------------------------
 
 bonus: all $(BONUS_NAME)
-
-$(BONUS_DIR_OBJ):
-	mkdir $(BONUS_DIR_OBJ)
 
 $(BONUS_DIR_OBJ)/%.o : $(BONUS_DIR_SRC)/%.c | $(BONUS_DIR_OBJ)
 	@$(CC) $(CFLAGS) $(HEADERS) -o $@ -c $<
@@ -82,9 +80,9 @@ $(BONUS_DIR_OBJ)/%.o : $(BONUS_DIR_SRC)/%.c | $(BONUS_DIR_OBJ)
 # executable
 $(BONUS_NAME): $(BONUS_OBJ)
 	@$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
-	@echo "\n🖇🖇🖇🎁🎁🎁 $(NAME)\n"
+	@echo "\n🖇🖇🖇🎁🎁🎁 $@\n"
 
-# ------------------------------------------------------------------------------
+# ----------------------------- Clean ------------------------------------------
 
 clean:
 	@rm -f $(OBJ) $(BONUS_OBJ)
@@ -92,10 +90,11 @@ clean:
 	@$(MAKE) -C $(LIBFT) clean
 
 fclean: clean
-	@rm -f $(NAME) $(BONUS)
-	@echo 🧹🧹🧹 cleaned $(NAME)
+	@rm -f $(NAME) $(BONUS_NAME)
+	@echo 🧹🧹🧹 cleaned $(NAME) $(BONUS_NAME)
 	@$(MAKE) -C $(LIBFT) fclean
 
 re: fclean all
+reb: fclean all bonus
 
-.PHONY: all bonus clean fclean re
+.PHONY: all bonus clean fclean re reb
