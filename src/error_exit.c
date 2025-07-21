@@ -6,7 +6,7 @@
 /*   By: rgohrig <rgohrig@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 13:50:55 by rgohrig           #+#    #+#             */
-/*   Updated: 2025/07/18 22:15:08 by rgohrig          ###   ########.fr       */
+/*   Updated: 2025/07/19 00:24:09 by rgohrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	error_exit_errno(char *msg)
 void	error_exit_input(void)
 {
 	const char	*msg
-		= "3 Wrong User Input\n\n"
+		= "Wrong User Input\n\n"
 		"_____________________Example Table_______________________\n"
 		"Program name | file in | comand 1  |  comand 2  | file out\n"
 		"   ./pipex   |  in.txt | \"ls -l\" | \"cat -e\" | out.txt\n"

@@ -6,7 +6,7 @@
 /*   By: rgohrig <rgohrig@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:17:46 by rgohrig           #+#    #+#             */
-/*   Updated: 2025/07/18 22:18:16 by rgohrig          ###   ########.fr       */
+/*   Updated: 2025/07/19 00:36:54 by rgohrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <stdio.h> // for printf, perror
 
 # include "libft.h"
+# include "get_next_line.h"
 
 typedef int	t_fd;
 
@@ -37,7 +38,7 @@ void		error_exit_input(void);
 // Parent functions
 
 int			main(int argc, char const *argv[], char const *envp[]);
-int			parser_check(int argc, char const *argv[]);
+void		parser_check(int argc, char const *argv[]);
 
 // Child functions
 
@@ -47,12 +48,22 @@ void		first_child( const char *input_file, t_fd *curr,
 				const char *command_in, const char *envp[]);
 void		middle_child(t_fd *curr, t_fd *next,
 				const char *command_in, const char *envp[]);
-pid_t		last_child(const char *output_file, t_fd *curr,
+pid_t		last_child(t_fd *curr, const char *output_file,
 				const char *command_in, const char *envp[]);
 
 void		exe_command(const char *comand_in, const char **envp);
 char		**split_command(const char *start);
 char		*get_path_comand(const char *cmd_name, const char *envp[]);
+
+// heardoc
+const char	*get_limiter(int argc, char const *argv[]);
+bool	is_her_doc(int argc, char const *argv[]);
+pid_t	split_processes_here_doc(int argc, const char **argv, const char *envp[]);
+
+void	first_child_here_doc(const char *limiter, t_fd *curr,
+	const char *command_in, const char *envp[]);
+pid_t	last_child_here_doc(t_fd *curr, const char *output_file,
+	const char *command_in, const char *envp[]);
 
 // util functions
 void		swap_ptrs(int **a, int **b);

@@ -6,7 +6,7 @@
 /*   By: rgohrig <rgohrig@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 13:53:10 by rgohrig           #+#    #+#             */
-/*   Updated: 2025/07/18 22:29:05 by rgohrig          ###   ########.fr       */
+/*   Updated: 2025/07/19 00:31:32 by rgohrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,14 @@ int	main(int argc, char const *argv[], char const *envp[])
 
 	exit_num = 0;
 	parser_check(argc, argv);
-	last_child_pid = split_processes(argc, argv, envp);
+	if (is_her_doc(argc, argv))
+	{
+		last_child_pid = split_processes_here_doc(argc, argv, envp);
+	}
+		else
+	{
+		last_child_pid = split_processes(argc, argv, envp);
+	}
 	waitpid(last_child_pid, &status, 0);
 	if (WIFEXITED(status))
 		exit_num = WEXITSTATUS(status);
