@@ -6,7 +6,7 @@
 /*   By: rgohrig <rgohrig@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:17:46 by rgohrig           #+#    #+#             */
-/*   Updated: 2025/07/21 14:07:42 by rgohrig          ###   ########.fr       */
+/*   Updated: 2025/07/21 17:48:29 by rgohrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,5 @@ void		first_child_here_doc(
 pid_t		last_child_here_doc(
 				t_fd *curr, const char *output_file,
 				const char *command_in, const char *envp[]);
-
 
 #endif

@@ -6,14 +6,14 @@
 /*   By: rgohrig <rgohrig@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 14:01:25 by rgohrig           #+#    #+#             */
-/*   Updated: 2025/07/21 14:26:00 by rgohrig          ###   ########.fr       */
+/*   Updated: 2025/07/21 17:49:53 by rgohrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-
-pid_t	split_processes_here_doc(int argc, const char **argv, const char *envp[])
+pid_t	split_processes_here_doc(
+	int argc, const char **argv, const char *envp[])
 {
 	int			count;
 	t_fd		pipes[2][2];

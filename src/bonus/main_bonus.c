@@ -6,7 +6,7 @@
 /*   By: rgohrig <rgohrig@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 13:53:10 by rgohrig           #+#    #+#             */
-/*   Updated: 2025/07/21 14:25:58 by rgohrig          ###   ########.fr       */
+/*   Updated: 2025/07/21 14:40:26 by rgohrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int argc, char const *argv[], char const *envp[])
 	waitpid(last_child_pid, &status, 0);
 	if (WIFEXITED(status))
 		exit_num = WEXITSTATUS(status);
-	if (exit_num != 0)
+	if (exit_num == 1)
 		exit_num += 126;
 	while (wait(NULL) >= 0 && errno != ECHILD)
 		;
