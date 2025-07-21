@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgohrig <rgohrig@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 13:53:10 by rgohrig           #+#    #+#             */
-/*   Updated: 2025/07/21 13:24:33 by rgohrig          ###   ########.fr       */
+/*   Updated: 2025/07/21 14:25:58 by rgohrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
-// Main function with only normal part accepting
+// Main function, starts the program
 int	main(int argc, char const *argv[], char const *envp[])
 {
 	pid_t		last_child_pid;
@@ -21,9 +21,14 @@ int	main(int argc, char const *argv[], char const *envp[])
 
 	exit_num = 0;
 	parser_check(argc, argv);
-	if (argc != 5)
-		error_exit_input();
-	last_child_pid = split_processes(argc, argv, envp);
+	if (is_here_doc(argc, argv))
+	{
+		last_child_pid = split_processes_here_doc(argc, argv, envp);
+	}
+	else
+	{
+		last_child_pid = split_processes(argc, argv, envp);
+	}
 	waitpid(last_child_pid, &status, 0);
 	if (WIFEXITED(status))
 		exit_num = WEXITSTATUS(status);
@@ -32,4 +37,13 @@ int	main(int argc, char const *argv[], char const *envp[])
 	while (wait(NULL) >= 0 && errno != ECHILD)
 		;
 	return (exit_num);
+}
+
+bool	is_here_doc(int argc, char const *argv[])
+{
+	if (ft_strncmp(argv[1], "here_doc", 8))
+		return (false);
+	if (argc <= 5)
+		error_exit_input();
+	return (true);
 }

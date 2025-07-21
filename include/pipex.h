@@ -6,7 +6,7 @@
 /*   By: rgohrig <rgohrig@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:17:46 by rgohrig           #+#    #+#             */
-/*   Updated: 2025/07/19 00:36:54 by rgohrig          ###   ########.fr       */
+/*   Updated: 2025/07/21 14:04:28 by rgohrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,8 @@ void		exe_command(const char *comand_in, const char **envp);
 char		**split_command(const char *start);
 char		*get_path_comand(const char *cmd_name, const char *envp[]);
 
-// heardoc
-const char	*get_limiter(int argc, char const *argv[]);
-bool	is_her_doc(int argc, char const *argv[]);
-pid_t	split_processes_here_doc(int argc, const char **argv, const char *envp[]);
-
-void	first_child_here_doc(const char *limiter, t_fd *curr,
-	const char *command_in, const char *envp[]);
-pid_t	last_child_here_doc(t_fd *curr, const char *output_file,
-	const char *command_in, const char *envp[]);
-
 // util functions
+
 void		swap_ptrs(int **a, int **b);
 void		create_pipe(t_fd *one_pipe);
 void		close_one_pip(t_fd *pipe);
