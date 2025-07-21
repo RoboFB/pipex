@@ -6,7 +6,7 @@
 #    By: rgohrig <rgohrig@student.42heilbronn.de>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/10 10:21:00 by rgohrig           #+#    #+#              #
-#    Updated: 2025/07/21 14:35:47 by rgohrig          ###   ########.fr        #
+#    Updated: 2025/07/21 20:37:53 by rgohrig          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,10 @@
 
 NAME :=			pipex
 CC :=			cc
-# CFLAGS :=		-Wall -Werror -Wextra # standard flags
-CFLAGS :=		-Wall -Werror -Wextra -g -fsanitize=address,undefined # debug
+CFLAGS :=		-Wall -Werror -Wextra# standard flags
+# CFLAGS :=		-Wall -Werror -Wextra -g -fsanitize=address,undefined# debug
+# export CFLAGS # set also for the libft
+
 
 LIBFT :=		./libft
 LIBS :=			$(LIBFT)/libft.a
@@ -55,11 +57,11 @@ $(DIR_OBJ)/%.o : $(DIR_SRC)/%.c | $(DIR_OBJ)
 # executable
 $(NAME): $(OBJ)
 	@$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
-	@echo "\n🖇🖇🖇 $@\n"
+	@echo "\n🖇🖇🖇 $@   ($(CFLAGS))\n"
 
 # ---------------------------- BONUS -------------------------------------------
 
-BONUS_NAME :=		$(NAME)_bonus
+BONUS_NAME :=		pipex_bonus
 BONUS_DIR_SRC :=	src/bonus
 BONUS_SRC :=		child_processes_bonus.c \
 					main_bonus.c \
@@ -80,7 +82,7 @@ $(BONUS_DIR_OBJ)/%.o : $(BONUS_DIR_SRC)/%.c | $(BONUS_DIR_OBJ)
 # executable
 $(BONUS_NAME): $(BONUS_OBJ)
 	@$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
-	@echo "\n🖇🖇🖇🎁🎁🎁 $@\n"
+	@echo "\n🖇🖇🖇🎁🎁🎁 $@   ($(CFLAGS))\n"
 
 # ----------------------------- Clean ------------------------------------------
 

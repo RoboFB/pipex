@@ -6,14 +6,14 @@
 #    By: rgohrig <rgohrig@student.42heilbronn.de>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/10 10:21:00 by rgohrig           #+#    #+#              #
-#    Updated: 2025/07/21 14:34:33 by rgohrig          ###   ########.fr        #
+#    Updated: 2025/07/21 18:06:29 by rgohrig          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 NAME := libft.a
 CC := cc
-CFLAGS := -Wall -Werror -Wextra
+# CFLAGS := -Wall -Werror -Wextra
 
 HEADERS := -I include
 
@@ -46,7 +46,7 @@ $(DIR_OBJ)/%.o : $(DIR_SRC)/%.c | $(DIR_OBJ)
 # arrive
 $(NAME) : $(OBJ)
 	@ar rcs $(NAME) $(OBJ)
-	@echo 📘📗📙 $(NAME)
+	@echo 📘📗📙 $(NAME)   \($(CFLAGS)\)
 
 clean :
 	@rm -f $(OBJ)
