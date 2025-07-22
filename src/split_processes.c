@@ -6,7 +6,7 @@
 /*   By: rgohrig <rgohrig@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 14:01:25 by rgohrig           #+#    #+#             */
-/*   Updated: 2025/07/21 17:45:45 by rgohrig          ###   ########.fr       */
+/*   Updated: 2025/07/22 15:30:50 by rgohrig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,3 +38,6 @@ pid_t	split_processes(int argc, const char **argv, const char *envp[])
 	close_one_pip(curr_pipe);
 	return (last_child_pid);
 }
+
+// ./pipex infile cmd cmd1 cmd2 outfile    6
+//    0       1    2   3    4      5
