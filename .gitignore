@@ -1,0 +1,36 @@
+
+#git
+*.gitignore
+
+#vs code
+**.vscode**/**/**
+*.json
+*.DS*
+
+# Robin
+*_R_*
+
+# documents
+
+*.pdf
+todos.md
+README.md
+
+# testing
+
+*test*
+*.txt
+
+# Executables
+*.out
+*.a
+*.o
+
+# pipex
+
+pipex
+pipex_bonus
+input
+output
+output2
+out
